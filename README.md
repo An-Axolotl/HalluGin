@@ -1,14 +1,16 @@
-# HalluGin: an offline drink recommender built on FlavorGraph
+<p align="center"><img src="images/hallucinagen_banner.png" width="560" alt="Hallucinagen logo and search bar"></p>
 
-tldr: generates alcoholic recipes, use your own judgement :3 , tested it at an alcoholic Hackathon. Generally positive reviews 
+# 🍸 HalluGin: an offline drink recommender built on FlavorGraph
 
-Built on **[FlavorGraph](https://github.com/lamypark/FlavorGraph)** ([paper](https://www.nature.com/articles/s41598-020-79422-8)): a large-scale food–chemical graph of 6,653 ingredients and 1,645 flavor compounds. Drinks are matched by chemical similarity (shared flavor compounds), recipe pairing scores, and FlavorGraph's ingredient embeddings.
+**tl;dr: 🍹 makes cocktail recipes from a flavor prompt. Use your own judgement :3 Tested at a hackathon with generally positive reviews.**
 
-Type a flavor or a theme ("smoky autumn with maple", "tropical but no coconut", "basil strawberry spritz").
+🧪 Built on **[FlavorGraph](https://github.com/lamypark/FlavorGraph)** ([paper](https://www.nature.com/articles/s41598-020-79422-8)): a large-scale food–chemical graph of 6,653 ingredients and 1,645 flavor compounds. Drinks are matched by chemical similarity (shared flavor compounds), recipe pairing scores, and FlavorGraph's ingredient embeddings.
+
+💬 Type a flavor or a theme ("smoky autumn with maple", "tropical but no coconut", "basil strawberry spritz").
 It returns three cocktails with quantities scaled to your servings, a glass, a method, garnishes and
 seasonings on top, and a short note on *why* the ingredients fit (shared flavor compounds).
 
-There is no LLM and no network access. Everything runs from `drinkrec/data/flavorgraph.npz` (2.4 MB).
+🔌 There is no LLM and no network access. Everything runs from `drinkrec/data/flavorgraph.npz` (2.4 MB).
 
 ```bash
 pip install numpy            # the only dependency (use a venv)
@@ -17,7 +19,7 @@ python3 -m drinkrec "cozy winter warmer" --servings 4        # CLI
 python3 -m pytest -q         # tests
 ```
 
-## Examples
+## 🍋 Examples
 
 | Prompt | Top drink (1 serving) | On top |
 |---|---|---|
@@ -28,7 +30,7 @@ python3 -m pytest -q         # tests
 | `basil strawberry spritz` | Strawberry Champagne Spritz: 3 oz champagne, 1½ oz Madeira, 1 oz soda, 1 oz strawberry purée | basil leaf |
 | `bitter italian aperitivo` | Campari Gin Stirred: 2 oz gin, ¾ oz Campari, 2 dashes orange bitters | grapefruit peel, cardamom |
 
-### The UI: Hallucinagen 🍸
+### 🔍 The UI: Hallucinagen 🍸
 
 A search-engine-style page. Type a flavor or theme, pick servings, and hit **Hallucinagen Search**, or try
 **I'm Feeling Thirsty** for a random prompt. Results list each drink with quantities, garnishes and seasonings on top,
@@ -41,7 +43,7 @@ e.g. `http://127.0.0.1:8765/?q=coffee%20dessert&servings=2`.
   <img src="images/ui_spicy.png" width="49%">
 </p>
 
-### Graph similarity behind the picks
+### 🕸️ Graph similarity behind the picks
 
 Each figure takes the top drink for a prompt and shows how its ingredients and garnishes connect in FlavorGraph.
 Edge width and the heatmap give the cosine similarity of each pair's flavor-compound sets. The box lists the pairs
@@ -54,7 +56,7 @@ with the most shared compounds.
 
 Regenerate with `python3 scripts/make_figures.py` (needs matplotlib + networkx).
 
-## How it works
+## ⚙️ How it works
 1. **Prompt parsing**: theme words (`themes.py`, ~40 themes and ~120 synonyms), spirit names ("tequila", "no gin"),
    style words (spritz, sour, toddy...), and *any* of FlavorGraph's 6,653 ingredient names. Misspellings are
    fuzzy-matched. "no X" / "without X" excludes items.
