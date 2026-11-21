@@ -13,7 +13,7 @@ from urllib.parse import parse_qs, urlparse
 
 from drinkrec.engine import Recommender
 
-PAGE = (Path(__file__).resolve().parent / "ui" / "index.html").read_bytes()
+PAGE = Path(__file__).resolve().parent / "ui" / "index.html"
 REC = None
 
 
@@ -28,7 +28,7 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         u = urlparse(self.path)
         if u.path in ("/", "/index.html"):
-            return self._send(200, PAGE, "text/html; charset=utf-8")
+            return self._send(200, PAGE.read_bytes(), "text/html; charset=utf-8")
         if u.path == "/api/recommend":
             q = parse_qs(u.query)
             prompt = q.get("q", [""])[0][:300]

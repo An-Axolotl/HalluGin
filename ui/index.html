@@ -3,75 +3,133 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Flavor Pour</title>
+<title>Hallucinagen</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍸</text></svg>">
 <style>
-:root{--bg:#f7f3ee;--card:#fff;--ink:#2a2320;--muted:#7a6e66;--accent:#b5562f;--chip:#efe4da;--line:#e6dbd0}
-@media (prefers-color-scheme:dark){:root{--bg:#1b1715;--card:#26201d;--ink:#f1e9e2;--muted:#a8998e;--accent:#e08a5f;--chip:#3a302b;--line:#3a302b}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
-main{max-width:980px;margin:0 auto;padding:28px 16px 60px}
-h1{margin:0;font-size:28px}.sub{color:var(--muted);margin:4px 0 20px}
-form{display:flex;gap:8px;flex-wrap:wrap}
-input[type=text]{flex:1 1 320px;padding:12px 14px;font-size:16px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
-.serv{display:flex;align-items:center;gap:6px;color:var(--muted)}
-.serv input{width:64px;padding:11px 8px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-size:16px}
-button{padding:12px 18px;border:0;border-radius:10px;background:var(--accent);color:#fff;font-size:16px;cursor:pointer}
-.ex{margin:12px 0 4px;display:flex;flex-wrap:wrap;gap:6px}
-.ex span{background:var(--chip);padding:4px 10px;border-radius:99px;font-size:13px;cursor:pointer}
-.und{color:var(--muted);font-size:14px;margin:18px 0 8px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
-.card h2{font-size:19px;margin:0 0 2px}.meta{color:var(--muted);font-size:13px;margin-bottom:10px}
-table{width:100%;border-collapse:collapse;font-size:15px}td{padding:3px 0;vertical-align:top}td.amt{white-space:nowrap;padding-right:12px;font-variant-numeric:tabular-nums;font-weight:600}
-.gar{margin:10px 0 0;padding:8px 10px;background:var(--chip);border-radius:8px;font-size:14px}
-.method{font-size:14px;margin:10px 0 0}
-details{margin-top:8px;font-size:13px;color:var(--muted)}summary{cursor:pointer}
-.err{color:var(--accent)}
-footer{margin-top:30px;font-size:12px;color:var(--muted)}
+:root{--bg:#fff;--ink:#202124;--muted:#5f6368;--line:#dfe1e5;--hover:#f8f9fa;--btn:#f8f9fa;--link:#1a0dab;--chip:#f1f3f4;--shadow:0 1px 6px rgba(32,33,36,.28)}
+@media (prefers-color-scheme:dark){:root{--bg:#202124;--ink:#e8eaed;--muted:#9aa0a6;--line:#5f6368;--hover:#303134;--btn:#303134;--link:#8ab4f8;--chip:#303134;--shadow:0 1px 6px rgba(0,0,0,.6)}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Arial,Helvetica,sans-serif;min-height:100vh}
+.logo{font:500 76px/1 "Product Sans",Arial,sans-serif;letter-spacing:-2px;user-select:none;white-space:nowrap}
+.logo span:nth-child(6n+1){color:#d2502b}.logo span:nth-child(6n+2){color:#e6a23c}.logo span:nth-child(6n+3){color:#2e9e6b}
+.logo span:nth-child(6n+4){color:#c2407e}.logo span:nth-child(6n+5){color:#3b82c4}.logo span:nth-child(6n){color:#7a52b3}
+.logo .emoji{letter-spacing:0;margin-left:6px}
+.box{display:flex;align-items:center;gap:10px;height:46px;padding:0 10px 0 16px;border:1px solid var(--line);border-radius:24px;background:var(--bg);width:100%}
+.box:hover,.box:focus-within{box-shadow:var(--shadow);border-color:transparent}
+.box svg{flex:none;fill:var(--muted)}
+.box input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--ink);font-size:16px}
+.box select{border:0;background:transparent;color:var(--muted);font-size:13px;outline:0;cursor:pointer}
+.box .x{cursor:pointer;color:var(--muted);font-size:22px;padding:0 6px;display:none}
+.btns{display:flex;justify-content:center;gap:12px;margin-top:28px;flex-wrap:wrap}
+.btns button{background:var(--btn);border:1px solid var(--btn);border-radius:4px;color:var(--ink);font-size:14px;padding:0 16px;height:36px;cursor:pointer}
+.btns button:hover{border-color:var(--line);box-shadow:0 1px 1px rgba(0,0,0,.1)}
+#home{display:flex;flex-direction:column;align-items:center;padding:22vh 16px 40px}
+#home .box{max-width:584px;margin-top:28px}
+.try{margin-top:26px;color:var(--muted);font-size:13px;text-align:center;max-width:584px}
+.try a{color:var(--link);text-decoration:none;margin:0 4px;cursor:pointer;white-space:nowrap}.try a:hover{text-decoration:underline}
+#res{display:none}
+header{display:flex;align-items:center;gap:28px;padding:20px 24px 12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+header .logo{font-size:30px;letter-spacing:-.5px;cursor:pointer}
+header .box{max-width:690px;flex:1 1 300px}
+.wrap{max-width:900px;padding:0 24px 0 180px}
+.stats{color:var(--muted);font-size:14px;margin:14px 0 22px}
+.r{margin-bottom:30px;max-width:650px}
+.r .url{font-size:12px;color:var(--muted)}
+.r h3{margin:2px 0 4px;font-size:20px;font-weight:400;color:var(--link)}
+.r .meta{color:var(--muted);font-size:14px}
+.r table{border-collapse:collapse;margin:8px 0 4px;font-size:14px}.r td{padding:2px 14px 2px 0;vertical-align:top}
+.r td.amt{white-space:nowrap;font-weight:700;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chips span{background:var(--chip);border:1px solid var(--line);border-radius:16px;padding:3px 10px;font-size:13px}
+.r .method{margin:6px 0}
+.r details{color:var(--muted);font-size:13px}.r summary{cursor:pointer;color:var(--link)}
+.r ul{margin:6px 0;padding-left:18px}
+footer{color:var(--muted);font-size:13px;padding:18px 24px;background:var(--hover);border-top:1px solid var(--line);margin-top:30px}
+footer a{color:var(--muted)}
+.err{color:#d93025}
+@media (max-width:860px){.wrap{padding:0 16px}#home{padding-top:14vh}.logo{font-size:44px}header{gap:12px;padding:14px 16px}}
 </style>
 </head>
 <body>
-<main>
-<h1>Flavor Pour</h1>
-<p class="sub">Describe a flavor or a theme. Drinks are built from FlavorGraph chemistry (shared flavor compounds) and recipe pairings. Runs offline.</p>
-<form id="f">
-  <input id="q" type="text" placeholder="e.g. smoky autumn with maple, or tropical but no coconut" autocomplete="off">
-  <label class="serv">Servings <input id="s" type="number" min="1" max="50" value="1"></label>
-  <button>Mix</button>
-</form>
-<div class="ex" id="ex"></div>
-<div class="und" id="und"></div>
-<div class="grid" id="out"></div>
-<footer>Data: <a href="https://github.com/lamypark/FlavorGraph" style="color:inherit">FlavorGraph</a> (Park et al., Sci. Reports 2021), Apache-2.0. Drink responsibly.</footer>
-</main>
+<section id="home">
+  <div class="logo" id="logo1"></div>
+  <form class="box" id="f1">
+    <svg width="20" height="20" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+    <input id="q1" type="text" placeholder="Describe a flavor or theme…" autocomplete="off" autofocus aria-label="Search drinks">
+    <select id="s1" aria-label="Servings"></select>
+  </form>
+  <div class="btns">
+    <button id="mix">Hallucinagen Search</button>
+    <button id="lucky">I'm Feeling Thirsty</button>
+  </div>
+  <div class="try" id="try"></div>
+</section>
+
+<section id="res">
+  <header>
+    <div class="logo" id="logo2" title="Home"></div>
+    <form class="box" id="f2">
+      <input id="q2" type="text" autocomplete="off" aria-label="Search drinks">
+      <span class="x" id="clr">×</span>
+      <select id="s2" aria-label="Servings"></select>
+      <svg width="20" height="20" viewBox="0 0 24 24" style="cursor:pointer" id="go2"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+    </form>
+  </header>
+  <div class="wrap">
+    <div class="stats" id="stats"></div>
+    <div id="out"></div>
+  </div>
+  <footer>Powered by <a href="https://github.com/lamypark/FlavorGraph">FlavorGraph</a> chemistry (Park et al., Sci. Reports 2021, Apache-2.0). Runs offline, no tokens. Drink responsibly.</footer>
+</section>
+
 <script>
+const $=id=>document.getElementById(id);
+const logo=()=>[...'Hallucinagen'].map(c=>`<span>${c}</span>`).join('')+'<span class="emoji">🍸</span>';
+$('logo1').innerHTML=logo();$('logo2').innerHTML=logo();
+for(const s of[$('s1'),$('s2')])for(let i=1;i<=12;i++)s.add(new Option(i===1?'1 serving':i+' servings',i));
 const EX=["smoky autumn with maple","something tropical for the beach","refreshing cucumber gin","cozy winter warmer","coffee dessert","spicy tequila, no lime","basil strawberry spritz","bitter italian aperitivo","romantic date night","peach and ginger whiskey"];
-const ex=document.getElementById('ex');
-EX.forEach(t=>{const s=document.createElement('span');s.textContent=t;s.onclick=()=>{q.value=t;go()};ex.appendChild(s)});
-const q=document.getElementById('q'),sv=document.getElementById('s'),out=document.getElementById('out'),und=document.getElementById('und');
+$('try').innerHTML='Try: '+EX.slice(0,6).map(t=>`<a>${t}</a>`).join(' · ');
+$('try').querySelectorAll('a').forEach(a=>a.onclick=()=>search(a.textContent,$('s1').value));
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-async function go(){
-  if(!q.value.trim())return;
-  out.innerHTML='';und.textContent='Mixing…';
+
+async function search(q,serv){
+  q=(q||'').trim();if(!q)return;
+  serv=serv||1;
+  $('home').style.display='none';$('res').style.display='block';
+  $('q2').value=q;$('s2').value=serv;$('clr').style.display='inline';
+  history.replaceState(null,'',`?q=${encodeURIComponent(q)}&servings=${serv}`);
+  document.title=q+' - Hallucinagen';
+  $('stats').textContent='Mixing…';$('out').innerHTML='';
+  const t0=performance.now();
   try{
-    const r=await fetch(`/api/recommend?q=${encodeURIComponent(q.value)}&servings=${sv.value||1}`);
-    const d=await r.json();const u=d.understood,b=[];
+    const d=await (await fetch(`/api/recommend?q=${encodeURIComponent(q)}&servings=${serv}`)).json();
+    const u=d.understood,b=[];
     if(u.themes.length)b.push('themes: '+u.themes.join(', '));
     if(u.ingredients.length)b.push('ingredients: '+u.ingredients.map(x=>x.replace(/_/g,' ')).join(', '));
     if(u.spirits.length)b.push('spirits: '+u.spirits.join(', '));
     if(u.excluded.length)b.push('without: '+u.excluded.join(', '));
-    if(u.ignored.length)b.push('ignored: '+u.ignored.join(', '));
-    und.textContent='Understood: '+(b.join(' · ')||'nothing specific, so here is a balanced default');
-    out.innerHTML=d.drinks.map(x=>`<div class="card"><h2>${esc(x.name)}</h2>
-      <div class="meta">${x.servings} serving${x.servings>1?'s':''} · ~${x.abv}% ABV · ${esc(x.volume)}<br>${esc(x.glass)}</div>
+    $('stats').innerHTML=`About ${d.drinks.length} drinks (${((performance.now()-t0)/1000).toFixed(2)} seconds)`+
+      (b.length?`<br>Showing results for <b>${esc(b.join(' · '))}</b>`:'<br>Nothing specific recognized, so here is a balanced default');
+    $('out').innerHTML=d.drinks.map(x=>`<div class="r">
+      <div class="url">hallucinagen › ${esc(x.style)} › ${x.servings} serving${x.servings>1?'s':''}</div>
+      <h3>${esc(x.name)}</h3>
+      <div class="meta">~${x.abv}% ABV · ${esc(x.volume)} · ${esc(x.glass)}</div>
       <table>${x.ingredients.map(i=>`<tr><td class="amt">${esc(i.amount)}</td><td>${esc(i.item)}</td></tr>`).join('')}</table>
-      <div class="gar"><b>On top:</b> ${x.garnish.map(g=>esc(g.prep)).join('; ')}</div>
-      <p class="method">${esc(x.method)}</p>
-      <details><summary>Why these go together</summary><ul>${x.why.map(w=>`<li>${esc(w)}</li>`).join('')}</ul></details></div>`).join('')
-      ||'<p class="err">No drink fits those constraints. Try loosening them.</p>';
-  }catch(e){und.innerHTML='<span class="err">Server not reachable. Is app.py running?</span>'}
+      <div class="chips">${x.garnish.map(g=>`<span>${g.seasoning?'✦ ':'🍋 '}${esc(g.prep)}</span>`).join('')}</div>
+      <div class="method">${esc(x.method)}</div>
+      <details><summary>Why these go together</summary><ul>${x.why.map(w=>`<li>${esc(w)}</li>`).join('')}</ul></details>
+    </div>`).join('')||'<p class="err">No drink fits those constraints. Try loosening them.</p>';
+  }catch(e){$('stats').innerHTML='<span class="err">Server not reachable. Is app.py running?</span>'}
 }
-document.getElementById('f').onsubmit=e=>{e.preventDefault();go()};
-const P=new URLSearchParams(location.search);if(P.get('q')){q.value=P.get('q');if(P.get('servings'))sv.value=P.get('servings');go()}
+$('f1').onsubmit=e=>{e.preventDefault();search($('q1').value,$('s1').value)};
+$('mix').onclick=()=>search($('q1').value||EX[Math.floor(Math.random()*EX.length)],$('s1').value);
+$('lucky').onclick=()=>search(EX[Math.floor(Math.random()*EX.length)],$('s1').value);
+$('f2').onsubmit=e=>{e.preventDefault();search($('q2').value,$('s2').value)};
+$('go2').onclick=()=>search($('q2').value,$('s2').value);
+$('s2').onchange=()=>search($('q2').value,$('s2').value);
+$('clr').onclick=()=>{$('q2').value='';$('q2').focus()};
+$('logo2').onclick=()=>{history.replaceState(null,'',location.pathname);document.title='Hallucinagen';$('res').style.display='none';$('home').style.display='flex';$('q1').value='';$('q1').focus()};
+const P=new URLSearchParams(location.search);if(P.get('q'))search(P.get('q'),P.get('servings'));
 </script>
 </body>
 </html>

@@ -105,7 +105,7 @@ def test_http_api(rec):
     threading.Thread(target=srv.serve_forever, daemon=True).start()
     try:
         base = f"http://127.0.0.1:{srv.server_address[1]}"
-        assert b"Flavor Pour" in urllib.request.urlopen(base + "/").read()
+        assert b"Hallucinagen" in urllib.request.urlopen(base + "/").read()
         out = json.loads(urllib.request.urlopen(base + "/api/recommend?q=cozy%20winter&servings=3").read())
         assert out["drinks"] and out["drinks"][0]["servings"] == 3
     finally:

@@ -12,7 +12,7 @@ There is no LLM and no network access. Everything runs from `drinkrec/data/flavo
 
 ```bash
 pip install numpy            # the only dependency (use a venv)
-python3 app.py               # web UI ("Flavor Pour") at http://127.0.0.1:8765
+python3 app.py               # Hallucinagen web UI, opens http://127.0.0.1:8765
 python3 -m drinkrec "cozy winter warmer" --servings 4        # CLI
 python3 -m pytest -q         # tests
 ```
@@ -28,12 +28,17 @@ python3 -m pytest -q         # tests
 | `basil strawberry spritz` | Strawberry Champagne Spritz: 3 oz champagne, 1½ oz Madeira, 1 oz soda, 1 oz strawberry purée | basil leaf |
 | `bitter italian aperitivo` | Campari Gin Stirred: 2 oz gin, ¾ oz Campari, 2 dashes orange bitters | grapefruit peel, cardamom |
 
-### The UI
+### The UI: Hallucinagen 🍸
 
+A search-engine-style page. Type a flavor or theme, pick servings, and hit **Hallucinagen Search**, or try
+**I'm Feeling Thirsty** for a random prompt. Results list each drink with quantities, garnishes and seasonings on top,
+the method, and a "Why these go together" dropdown that cites shared flavor compounds. Prompts work as links too,
+e.g. `http://127.0.0.1:8765/?q=coffee%20dessert&servings=2`.
+
+<p align="center"><img src="images/ui_home.png" width="80%"></p>
 <p align="center">
-  <img src="images/ui_1.png" width="32%">
-  <img src="images/ui_2.png" width="32%">
-  <img src="images/ui_3.png" width="32%">
+  <img src="images/ui_cozy.png" width="49%">
+  <img src="images/ui_spicy.png" width="49%">
 </p>
 
 ### Graph similarity behind the picks
