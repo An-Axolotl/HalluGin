@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flavor Pour</title>
+<style>
+:root{--bg:#f7f3ee;--card:#fff;--ink:#2a2320;--muted:#7a6e66;--accent:#b5562f;--chip:#efe4da;--line:#e6dbd0}
+@media (prefers-color-scheme:dark){:root{--bg:#1b1715;--card:#26201d;--ink:#f1e9e2;--muted:#a8998e;--accent:#e08a5f;--chip:#3a302b;--line:#3a302b}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:980px;margin:0 auto;padding:28px 16px 60px}
+h1{margin:0;font-size:28px}.sub{color:var(--muted);margin:4px 0 20px}
+form{display:flex;gap:8px;flex-wrap:wrap}
+input[type=text]{flex:1 1 320px;padding:12px 14px;font-size:16px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+.serv{display:flex;align-items:center;gap:6px;color:var(--muted)}
+.serv input{width:64px;padding:11px 8px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-size:16px}
+button{padding:12px 18px;border:0;border-radius:10px;background:var(--accent);color:#fff;font-size:16px;cursor:pointer}
+.ex{margin:12px 0 4px;display:flex;flex-wrap:wrap;gap:6px}
+.ex span{background:var(--chip);padding:4px 10px;border-radius:99px;font-size:13px;cursor:pointer}
+.und{color:var(--muted);font-size:14px;margin:18px 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.card h2{font-size:19px;margin:0 0 2px}.meta{color:var(--muted);font-size:13px;margin-bottom:10px}
+table{width:100%;border-collapse:collapse;font-size:15px}td{padding:3px 0;vertical-align:top}td.amt{white-space:nowrap;padding-right:12px;font-variant-numeric:tabular-nums;font-weight:600}
+.gar{margin:10px 0 0;padding:8px 10px;background:var(--chip);border-radius:8px;font-size:14px}
+.method{font-size:14px;margin:10px 0 0}
+details{margin-top:8px;font-size:13px;color:var(--muted)}summary{cursor:pointer}
+.err{color:var(--accent)}
+footer{margin-top:30px;font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<main>
+<h1>Flavor Pour</h1>
+<p class="sub">Describe a flavor or a theme. Drinks are built from FlavorGraph chemistry (shared flavor compounds) and recipe pairings. Runs offline.</p>
+<form id="f">
+  <input id="q" type="text" placeholder="e.g. smoky autumn with maple, or tropical but no coconut" autocomplete="off">
+  <label class="serv">Servings <input id="s" type="number" min="1" max="50" value="1"></label>
+  <button>Mix</button>
+</form>
+<div class="ex" id="ex"></div>
+<div class="und" id="und"></div>
+<div class="grid" id="out"></div>
+<footer>Data: FlavorGraph (Park et al., Sci. Reports 2021), Apache-2.0. Drink responsibly.</footer>
+</main>
+<script>
+const EX=["smoky autumn with maple","something tropical for the beach","refreshing cucumber gin","cozy winter warmer","coffee dessert","spicy tequila, no lime","basil strawberry spritz","bitter italian aperitivo","romantic date night","peach and ginger whiskey"];
+const ex=document.getElementById('ex');
+EX.forEach(t=>{const s=document.createElement('span');s.textContent=t;s.onclick=()=>{q.value=t;go()};ex.appendChild(s)});
+const q=document.getElementById('q'),sv=document.getElementById('s'),out=document.getElementById('out'),und=document.getElementById('und');
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+async function go(){
+  if(!q.value.trim())return;
+  out.innerHTML='';und.textContent='Mixing…';
+  try{
+    const r=await fetch(`/api/recommend?q=${encodeURIComponent(q.value)}&servings=${sv.value||1}`);
+    const d=await r.json();const u=d.understood,b=[];
+    if(u.themes.length)b.push('themes: '+u.themes.join(', '));
+    if(u.ingredients.length)b.push('ingredients: '+u.ingredients.map(x=>x.replace(/_/g,' ')).join(', '));
+    if(u.spirits.length)b.push('spirits: '+u.spirits.join(', '));
+    if(u.excluded.length)b.push('without: '+u.excluded.join(', '));
+    if(u.ignored.length)b.push('ignored: '+u.ignored.join(', '));
+    und.textContent='Understood: '+(b.join(' · ')||'nothing specific, so here is a balanced default');
+    out.innerHTML=d.drinks.map(x=>`<div class="card"><h2>${esc(x.name)}</h2>
+      <div class="meta">${x.servings} serving${x.servings>1?'s':''} · ~${x.abv}% ABV · ${esc(x.volume)}<br>${esc(x.glass)}</div>
+      <table>${x.ingredients.map(i=>`<tr><td class="amt">${esc(i.amount)}</td><td>${esc(i.item)}</td></tr>`).join('')}</table>
+      <div class="gar"><b>On top:</b> ${x.garnish.map(g=>esc(g.prep)).join('; ')}</div>
+      <p class="method">${esc(x.method)}</p>
+      <details><summary>Why these go together</summary><ul>${x.why.map(w=>`<li>${esc(w)}</li>`).join('')}</ul></details></div>`).join('')
+      ||'<p class="err">No drink fits those constraints. Try loosening them.</p>';
+  }catch(e){und.innerHTML='<span class="err">Server not reachable. Is app.py running?</span>'}
+}
+document.getElementById('f').onsubmit=e=>{e.preventDefault();go()};
+</script>
+</body>
+</html>
