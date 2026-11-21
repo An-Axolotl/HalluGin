@@ -1,12 +1,14 @@
 # HalluGin: an offline drink recommender built on FlavorGraph
 
+tldr: generates alcoholic recipes, use your own judgement :3 , tested it at an alcoholic Hackathon. Generally positive reviews 
+
 Built on **[FlavorGraph](https://github.com/lamypark/FlavorGraph)** ([paper](https://www.nature.com/articles/s41598-020-79422-8)): a large-scale food–chemical graph of 6,653 ingredients and 1,645 flavor compounds. Drinks are matched by chemical similarity (shared flavor compounds), recipe pairing scores, and FlavorGraph's ingredient embeddings.
 
 Type a flavor or a theme ("smoky autumn with maple", "tropical but no coconut", "basil strawberry spritz").
-It returns three cocktails with exact quantities scaled to your servings, a glass, a method, garnishes and
+It returns three cocktails with quantities scaled to your servings, a glass, a method, garnishes and
 seasonings on top, and a short note on *why* the ingredients fit (shared flavor compounds).
 
-There is no LLM, no API key and no network access. Everything runs from `drinkrec/data/flavorgraph.npz` (2.4 MB).
+There is no LLM and no network access. Everything runs from `drinkrec/data/flavorgraph.npz` (2.4 MB).
 
 ```bash
 pip install numpy            # the only dependency (use a venv)
