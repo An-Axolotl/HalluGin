@@ -15,6 +15,38 @@ python3 -m drinkrec "cozy winter warmer" --servings 4        # CLI
 python3 -m pytest -q         # tests
 ```
 
+## Examples
+
+| Prompt | Top drink (1 serving) | On top |
+|---|---|---|
+| `cozy winter warmer` | Spiced Rum Toddy: 1½ oz spiced rum, ½ oz cinnamon syrup, ½ oz lime, 4 oz hot apple cider | cinnamon stick, orange peel |
+| `something tropical for the beach` | Coconut Rum Punch: 2 oz coconut rum, 1½ oz coconut water, ¾ oz lime, ½ oz orgeat, ½ oz banana liqueur | pineapple wedge, toasted coconut rim |
+| `spicy tequila, no lime` | Tequila Sour: 2 oz tequila, ¾ oz grapefruit, ¾ oz ginger syrup | black pepper, grapefruit peel |
+| `coffee dessert` | Bourbon Flip: 1½ oz bourbon, 1 oz coffee liqueur, 1 oz cream, ¼ oz vanilla syrup | cocoa dust, brandied cherry |
+| `basil strawberry spritz` | Strawberry Champagne Spritz: 3 oz champagne, 1½ oz Madeira, 1 oz soda, 1 oz strawberry purée | basil leaf |
+| `bitter italian aperitivo` | Campari Gin Stirred: 2 oz gin, ¾ oz Campari, 2 dashes orange bitters | grapefruit peel, cardamom |
+
+### The UI
+
+<p align="center">
+  <img src="images/ui_1.png" width="32%">
+  <img src="images/ui_2.png" width="32%">
+  <img src="images/ui_3.png" width="32%">
+</p>
+
+### Graph similarity behind the picks
+
+Each figure takes the top drink for a prompt and shows how its ingredients and garnishes connect in FlavorGraph.
+Edge width and the heatmap give the cosine similarity of each pair's flavor-compound sets. The box lists the pairs
+with the most shared compounds.
+
+![cozy winter warmer](images/graph_1_cozy.png)
+![something tropical for the beach](images/graph_2_tropical.png)
+![smoky autumn with maple](images/graph_3_smoky.png)
+![basil strawberry spritz](images/graph_4_basil.png)
+
+Regenerate with `python3 scripts/make_figures.py` (needs matplotlib + networkx).
+
 ## How it works
 1. **Prompt parsing**: theme words (`themes.py`, ~40 themes and ~120 synonyms), spirit names ("tequila", "no gin"),
    style words (spritz, sour, toddy...), and *any* of FlavorGraph's 6,653 ingredient names. Misspellings are

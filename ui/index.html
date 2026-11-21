@@ -41,7 +41,7 @@ footer{margin-top:30px;font-size:12px;color:var(--muted)}
 <div class="ex" id="ex"></div>
 <div class="und" id="und"></div>
 <div class="grid" id="out"></div>
-<footer>Data: FlavorGraph (Park et al., Sci. Reports 2021), Apache-2.0. Drink responsibly.</footer>
+<footer>Data: <a href="https://github.com/lamypark/FlavorGraph" style="color:inherit">FlavorGraph</a> (Park et al., Sci. Reports 2021), Apache-2.0. Drink responsibly.</footer>
 </main>
 <script>
 const EX=["smoky autumn with maple","something tropical for the beach","refreshing cucumber gin","cozy winter warmer","coffee dessert","spicy tequila, no lime","basil strawberry spritz","bitter italian aperitivo","romantic date night","peach and ginger whiskey"];
@@ -71,6 +71,7 @@ async function go(){
   }catch(e){und.innerHTML='<span class="err">Server not reachable. Is app.py running?</span>'}
 }
 document.getElementById('f').onsubmit=e=>{e.preventDefault();go()};
+const P=new URLSearchParams(location.search);if(P.get('q')){q.value=P.get('q');if(P.get('servings'))sv.value=P.get('servings');go()}
 </script>
 </body>
 </html>
